@@ -8,6 +8,12 @@ namespace MathCaptcha
 {
     public class Captcha
     {
+        public static bool CaptchaMatch(string encryptText, string answer)
+        {
+            var dec = EncryptionHelper.Decrypt(encryptText);
+            return dec == answer;
+        }
+
         public static List<string> GetCaptcha()
         {
             var l=new List<string>();
@@ -29,7 +35,7 @@ namespace MathCaptcha
                     // Convert byte[] to Base64 String
                     string base64String = "data:image/png;base64," + Convert.ToBase64String(imageBytes);
                     l.Add(base64String);
-                    l.Add(answer.ToString());
+                    l.Add(EncryptionHelper.Encrypt(answer.ToString()));
                 }
             }
             catch (Exception e)
